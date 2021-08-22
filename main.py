@@ -1,4 +1,3 @@
-"""Export every layer as a .png file."""
 import os
 import argparse
 from photoshop import Session
