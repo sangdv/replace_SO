@@ -10,16 +10,19 @@ def replace_smart_object(opt):
     input_psd_path = os.path.join(curdir, input_psd_path)
     so_path = os.path.join(curdir, so_path)
     out_path = os.path.join(curdir, out_path)
+    
     with Session(input_psd_path, action="open", auto_close=True) as ps:
+        # open input psd
         doc = ps.active_document
-        layers = doc.artLayers
-
+        
+        # replace smart object
         replace_contents = ps.app.stringIDToTypeID("placedLayerReplaceContents")
         desc = ps.ActionDescriptor
         idnull = ps.app.charIDToTypeID("null")
         desc.putPath(idnull, so_path)
         ps.app.executeAction(replace_contents, desc)
         
+        # export output
         options = ps.PNGSaveOptions()
         doc.saveAs(out_path, options, True)
 
